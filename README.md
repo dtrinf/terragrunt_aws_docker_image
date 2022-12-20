@@ -1,0 +1,1 @@
+# terragrunt_aws_docker_image

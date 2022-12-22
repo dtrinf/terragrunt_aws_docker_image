@@ -1,11 +1,14 @@
 
 FROM alpine/terragrunt:1.3.6-eks
 
-RUN apk --no-progress --quiet update &&\
-    apk --no-progress --quiet --no-cache add sudo zsh zsh-vcs shadow curl
-
 ENV GLIBC_VER=2.34-r0
 ENV HELM_VER=v3.9.0
+ENV HCL2JSON_VER=v0.3.6
+
+RUN apk --no-progress --quiet update &&\
+    apk --no-progress --quiet --no-cache add sudo zsh zsh-vcs shadow curl jq &&\
+    curl -sL https://github.com/tmccombs/hcl2json/releases/download/${HCL2JSON_VER}/hcl2json_linux_amd64 -o /usr/local/bin/hcl2json &&\
+    chmod +x /usr/local/bin/hcl2json
 
 # install glibc compatibility for alpine
 RUN apk --no-cache add \
